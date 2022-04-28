@@ -1,0 +1,1 @@
+export const meterToMile = meter => (meter / 1609.34).toFixed(2)
