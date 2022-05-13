@@ -9,7 +9,7 @@ import TableBody from './TableBody'
 const MyTable = ({
     data
 }) => (
-    data && data.length > 0 ? (
+    data && Object.keys(data).length > 0 ? (
         <TableContainer>
             <Table>
                 <TableHeader />

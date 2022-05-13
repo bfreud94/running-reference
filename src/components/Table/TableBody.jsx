@@ -1,21 +1,18 @@
 import React from 'react'
 import { TableBody, TableCell, TableRow } from '@mui/material'
+import { meterToMile } from '../../util'
 
 const MyTableBody = ({
     data = []
 }) => (
     <TableBody>
-        {data.map(run => ({
-            date: run.date,
-            name: run.name,
-            distance: run.distance
-        })).map((row) => (
+        {Object.keys(data).map((year) => (
             <TableRow
-                key={row.date}
+                key={year}
             >
-                <TableCell component='th' scope='row'>{row.date.toLocaleDateString()}</TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.distance}</TableCell>
+                <TableCell component='th' scope='row'>{year}</TableCell>
+                <TableCell>{data[year].totals.activities}</TableCell>
+                <TableCell>{meterToMile(data[year].totals.distance)} miles</TableCell>
             </TableRow>
         ))}
     </TableBody>

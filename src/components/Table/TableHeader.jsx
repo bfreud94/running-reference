@@ -6,9 +6,9 @@ import TableCell from '@mui/material/TableCell'
 const TableHeader = (props) => (
     <TableHead>
         <TableRow>
-            <TableCell>First</TableCell>
-            <TableCell>Second</TableCell>
-            <TableCell>Third</TableCell>
+            <TableCell>Year</TableCell>
+            <TableCell>Total Activities</TableCell>
+            <TableCell>Total Distance</TableCell>
         </TableRow>
     </TableHead>
 )
