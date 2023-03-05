@@ -3,12 +3,14 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-const TableHeader = (props) => (
+const TableHeader = ({
+    columns
+}) => (
     <TableHead>
         <TableRow>
-            <TableCell>Year</TableCell>
-            <TableCell>Total Activities</TableCell>
-            <TableCell>Total Distance</TableCell>
+            {columns.map((column: any) => (
+                <TableCell key={column}>{column}</TableCell>
+            ))}
         </TableRow>
     </TableHead>
 )
