@@ -1,4 +1,4 @@
-import { GET_DATA, SET_MONTHLY_DATA, SET_YEARLY_DATA, UPDATE_DATA } from './types'
+import { GET_DATA, SET_MONTHLY_DATA, SET_SORTED_KEYS, SET_YEARLY_DATA, UPDATE_DATA } from './types'
 
 export const getData = () => async (dispatch: any) => {
     const data = await (await fetch('http://localhost:8000/api/yearlyRuns')).json()
@@ -8,7 +8,7 @@ export const getData = () => async (dispatch: any) => {
     })
 }
 
-export const setMonthlyData = (data: any) => (dispatch: any) => {
+export const setMonthlyData = (data: any, month: any) => (dispatch: any) => {
     dispatch({
         type: SET_MONTHLY_DATA,
         payload: data
@@ -26,5 +26,12 @@ export const updateData = (page: any) => (dispatch: any) => {
     dispatch({
         type: UPDATE_DATA,
         payload: page
+    })
+}
+
+export const setSortedKeys = (keys: any) => (dispatch: any) => {
+    dispatch({
+        type: SET_SORTED_KEYS,
+        payload: keys
     })
 }

@@ -17,18 +17,16 @@ const getColumns = (month: any, year: any) => {
 }
 
 const App = ({
-    data: {
-        currentData
-    },
+    data,
     getData,
     month,
     year
 }) => {
     useEffect(() => {
-        if (!currentData) {
+        if (!data) {
             getData()
         }
-    }, [currentData])
+    }, [data])
     const columns = getColumns(month, year)
     return (
         <>
@@ -38,7 +36,7 @@ const App = ({
                     path='/'
                 />
                 <Route
-                    element={currentData ? (
+                    element={data ? (
                         <Table columns={columns} />
                     ) : (
                         <Navigate to='/' />
@@ -46,7 +44,7 @@ const App = ({
                     path={`/:${year}`}
                 />
                 <Route
-                    element={currentData ? (
+                    element={data ? (
                         <Table columns={columns} />
                     ) : (
                         <Navigate to='/' />
@@ -59,14 +57,16 @@ const App = ({
 }
 
 App.propTypes = {
-    data: PropTypes.any.isRequired,
+    data: PropTypes.any,
     getData: PropTypes.any.isRequired,
+    sortedKeys: PropTypes.any.isRequired,
     month: PropTypes.any,
     year: PropTypes.any
 }
 
 const mapStateToProps = (state: any) => ({
-    data: state.data,
+    data: state.data.currentData,
+    sortedKeys: state.data.sortedKeys,
     month: state.page.month,
     year: state.page.year
 })

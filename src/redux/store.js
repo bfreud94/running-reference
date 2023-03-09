@@ -10,12 +10,8 @@ export default configureStore(
     {
         reducer,
         middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-            immutableCheck: {
-                ignoredPaths: ['data']
-            },
-            serializableCheck: {
-                ignoredPaths: ['data']
-            }
+            immutableCheck: false,
+            serializableCheck: false
         })
     },
     initialState,

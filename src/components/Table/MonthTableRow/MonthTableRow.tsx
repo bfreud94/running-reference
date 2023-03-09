@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { TableCell, TableRow } from '@mui/material'
 import { formatDate, meterToMile } from '../../../util'
 import { MonthTableRowProps } from './MonthTableRow.types'
@@ -15,4 +16,8 @@ const MonthTableRow = ({
     ))
 )
 
-export default MonthTableRow
+const mapStateToProps = (state: any) => ({
+    data: state.data.currentData
+})
+
+export default connect(mapStateToProps)(MonthTableRow)

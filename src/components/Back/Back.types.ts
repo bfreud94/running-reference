@@ -1,5 +1,4 @@
 export interface BackPropTypes extends BackConnectedPropTypes {
-    month: any
     year: any
 }
 

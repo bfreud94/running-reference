@@ -7,29 +7,27 @@ import TotalsRow from '../TotalsRow/TotalsRow'
 import { TableBodyPropTypes } from './TableBody.types'
 
 const TableBody = ({
-    data,
-    page
+    page,
+    sortedKeys
 }: TableBodyPropTypes) => (
     <MuiTableBody>
         {page !== 'month' ? (
-            Object.keys(data).map((time: any) => (
-                time !== 'totals' && (
-                    <StandardTableRow
-                        key={time}
-                        time={time}
-                    />
-                )
+            sortedKeys.map((time: any) => (
+                <StandardTableRow
+                    key={time}
+                    time={time}
+                />
             ))
         ) : (
-            <MonthTableRow data={data} />
+            <MonthTableRow />
         )}
-        <TotalsRow data={data} />
+        <TotalsRow />
     </MuiTableBody>
 )
 
 const mapStateToProps = (state: any) => ({
-    data: state.data.currentData,
-    page: state.page.page
+    page: state.page.page,
+    sortedKeys: state.data.sortedKeys
 })
 
 export default connect(mapStateToProps)(TableBody)

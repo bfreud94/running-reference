@@ -5,14 +5,11 @@ export interface StandardTableRowPropTypes extends StandardTableRowConnectedProp
 interface StandardTableRowConnectedPropTypes {
     data: any
     homeData: any
-    page: {
-        month: string
-        page: string
-        year: string
-    }
+    page: string
     setMonth: (month: string) => void
     setMonthlyData: (month: string) => void
     setPage: (page: string) => void
     setYear: (year: string) => void
     setYearlyData: (year: string) => void
+    year: string
 }

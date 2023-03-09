@@ -3,13 +3,14 @@ import { connect } from 'react-redux'
 import { TableCell, TableRow } from '@mui/material'
 import { TotalsRowPropTypes } from './TotalsRow.types'
 
-const getTotal = (data: any, page: string, key: string) => {
+const getTotal = (data: any, homeDataTotals: any, key: string, page: string) => {
     if (page === 'home') {
-        return data && data.totals ? data.totals[key] : 0
+        return homeDataTotals[key]
     } else if (page === 'year') {
-        return Object.keys(data).reduce(((accumulator: number, currentValue: any) =>
+        const total = Object.keys(data).reduce(((accumulator: number, currentValue: any) =>
             accumulator += parseFloat(data[currentValue].totals[key])
-        ), 0).toFixed(2)
+        ), 0)
+        return key === 'activities' ? total : total.toFixed(2)
     } else if (page === 'month') {
         return data.totals[key]
     }
@@ -18,17 +19,20 @@ const getTotal = (data: any, page: string, key: string) => {
 
 const TotalsRow = ({
     data,
-    page
+    homeDataTotals,
+    page,
 }: TotalsRowPropTypes) => (
     <TableRow>
         <TableCell>Totals</TableCell>
-        <TableCell>{getTotal(data, page, 'activities')}</TableCell>
-        <TableCell>{getTotal(data, page, 'distance')} miles</TableCell>
+        <TableCell>{getTotal(data, homeDataTotals, 'activities', page)}</TableCell>
+        <TableCell>{getTotal(data, homeDataTotals, 'distance', page)} miles</TableCell>
     </TableRow>
 )
 
 const mapStateToProps = (state: any) => ({
-    page: state.page.page
+    data: state.data.currentData,
+    page: state.page.page,
+    homeDataTotals: state.data.homeDataTotals
 })
 
 export default connect(mapStateToProps)(TotalsRow)

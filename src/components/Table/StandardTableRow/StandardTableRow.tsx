@@ -11,16 +11,14 @@ import { StandardTableRowPropTypes } from './StandardTableRow.types'
 const StandardTableRow = ({
     data,
     homeData,
-    page: {
-        page,
-        year
-    },
+    page,
     setMonth,
     setMonthlyData,
     setPage,
     setYear,
     setYearlyData,
-    time
+    time,
+    year
 }: StandardTableRowPropTypes) => {
     const navigate = useNavigate()
     return (
@@ -41,7 +39,8 @@ const StandardTableRow = ({
 const mapStateToProps = (state: any) => ({
     data: state.data.currentData,
     homeData: state.data.homeData,
-    page: state.page
+    page: state.page.page,
+    year: state.page.year
 })
 
 export default connect(mapStateToProps, { setMonth, setMonthlyData, setPage, setYear, setYearlyData })(StandardTableRow)
