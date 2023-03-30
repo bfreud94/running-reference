@@ -6,8 +6,9 @@ import TableHeader from './TableHeader/TableHeader'
 import TableBody from './TableBody/TableBody'
 import Back from '../Back/Back'
 import Loading from '../Loading/Loading'
-import { TablePropTypes } from './Table.types'
 import styles from './Table.styles'
+import { TablePropTypes } from './Table.types'
+import { RootState } from '../../redux/types'
 
 const Table = ({
     columns,
@@ -27,7 +28,7 @@ const Table = ({
     ) : <Loading />
 )
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: RootState) => ({
     data: state.data.currentData,
     year: state.page.year
 })

@@ -5,8 +5,9 @@ import { ArrowBack } from '@mui/icons-material'
 import { setMonth, setPage, setYear } from '../../redux/actions/pageActions'
 import { updateData } from '../../redux/actions/dataActions'
 import { onBackClick } from './functions'
-import { getArrowStyles } from './Back.styles'
+import styles from './Back.styles'
 import { BackPropTypes } from './Back.types'
+import { RootState } from '../../redux/types'
 
 const Back = ({
     page,
@@ -19,13 +20,13 @@ const Back = ({
     const navigate = useNavigate()
     return (
         <ArrowBack
-            style={getArrowStyles()}
+            style={styles.backArrow}
             onClick={() => onBackClick(navigate, page, setMonth, setPage, setYear, updateData, year)}
         />
     )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: RootState) => ({
     page: state.page.page,
     year: state.page.year
 });

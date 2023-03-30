@@ -1,14 +1,18 @@
+import { CSSProperties } from 'react'
+import { SetMonthAction, SetPageAction, SetYearAction, UpdateDataAction } from '../../redux/types'
+
 export interface BackPropTypes extends BackConnectedPropTypes {
-    year: any
+    year: string
 }
 
 interface BackConnectedPropTypes {
-    page: {
-        page: string
-        year: string
-    }
-    setMonth: (month: string | null) => void
-    setPage: (page: string) => void
-    setYear: (year: string | null) => void
-    updateData: any
+    page: string
+    setMonth: SetMonthAction
+    setPage: SetPageAction
+    setYear: SetYearAction
+    updateData: UpdateDataAction
+}
+
+export interface BackStyleTypes {
+    backArrow: CSSProperties
 }

@@ -5,12 +5,13 @@ const initialState = {
     homeData: null,
     homeDataTotals: null,
     monthlyData: null,
+    sortKey: '',
     sortedKeys: [],
     sortOrder: 'NONE',
     yearlyData: null
 }
 
-export default (state = initialState, action: any) => {
+export default (state = initialState, action: { payload: any, type: string }) => {
     switch (action.type) {
         case GET_DATA:
             const homeDataTotals = action.payload.totals
@@ -27,13 +28,18 @@ export default (state = initialState, action: any) => {
                 ...state,
                 currentData: action.payload,
                 monthlyData: action.payload,
-                sortedKeys: Object.keys(action.payload)
+                sortedKeys: action.payload.activities.map(({ id }) => id)
             }
         case SET_SORTED_KEYS:
+            const clickedSameColumn = action.payload.key === state.sortKey || state.sortKey
+            const sortOrder = clickedSameColumn ? (
+                state.sortOrder === 'NONE' ? 'DSC' : state.sortOrder === 'DSC' ? 'ASC' : 'NONE'
+            ) : 'DSC'
             return {
                 ...state,
-                sortedKeys: action.payload,
-                sortOrder: state.sortOrder === 'NONE' ? 'ASC' : state.sortOrder === 'ASC' ? 'DSC' : 'NONE'
+                sortKey: action.payload.key,
+                sortedKeys: action.payload.keys,
+                sortOrder
             }
         case SET_YEARLY_DATA:
             return {

@@ -1,15 +1,17 @@
+import { SetMonthAction, SetPageAction, SetYearAction } from '../../../redux/types'
+
 export interface StandardTableRowPropTypes extends StandardTableRowConnectedPropTypes {
-    time: any
+    time: string
 }
 
 interface StandardTableRowConnectedPropTypes {
     data: any
     homeData: any
     page: string
-    setMonth: (month: string) => void
+    setMonth: SetMonthAction
     setMonthlyData: (month: string) => void
-    setPage: (page: string) => void
-    setYear: (year: string) => void
+    setPage: SetPageAction
+    setYear: SetYearAction
     setYearlyData: (year: string) => void
     year: string
 }

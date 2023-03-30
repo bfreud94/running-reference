@@ -1,4 +1,7 @@
-import { meterToMile, numberToMonthMap } from '../util'
+import { SetMonthAction, SetPageAction, SetYearAction } from '../redux/types'
+import { meterToMile } from '../util/formatter'
+import { numberToMonthMap } from '../util/calendar'
+import { Activity, Month } from '../api/types'
 
 export const getRunsInAYear = (yearData: any) => (
     Object.keys(numberToMonthMap).map(number => {
@@ -10,17 +13,17 @@ export const getRunsInAYear = (yearData: any) => (
                 activities: monthlyRuns,
                 totals: {
                     activities: monthlyRuns.length,
-                    distance: meterToMile(monthlyRuns.reduce((acc: number, curr: any) => acc + curr.distance, 0))
+                    distance: meterToMile(monthlyRuns.reduce((acc: number, curr: Activity) => acc + curr.distance, 0))
                 }
             }
         }
-    }).reduce((accumulator: any, currentValue: any) => ({
+    }).reduce((accumulator: any, currentValue: Record<string, Month>) => ({
         ...accumulator,
         ...currentValue
     }), {})
 )
 
-export const getRunsInAMonth = (data: any, year: any, month: any) => getRunsInAYear(data[year])[month]
+export const getRunsInAMonth = (data: any, year: string, month: string) => getRunsInAYear(data[year])[month]
 
 const tableRowNavigateLocation = (rowText: string, time: string, year: string) => /^\d+$/.test(rowText) ? `/${time}` : `/${year}/${time}`
 
@@ -28,14 +31,14 @@ export const yearColumnClick = (
     e: any,
     data: any,
     navigate: any,
-    page: any,
-    setMonth: any,
+    page: string,
+    setMonth: SetMonthAction,
     setMonthlyData: any,
-    setPage: any,
-    setYear: any,
+    setPage: SetPageAction,
+    setYear: SetYearAction,
     setYearlyData: any,
-    time: any,
-    year: any
+    time: string,
+    year: string
 ) => {
     if (page !== 'month') {
         const toLocation = tableRowNavigateLocation(e.currentTarget.firstChild.textContent, time, year)

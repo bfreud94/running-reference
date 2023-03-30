@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { TableCell, TableRow } from '@mui/material'
 import { TotalsRowPropTypes } from './TotalsRow.types'
+import { RootState } from '../../../redux/types'
 
 const getTotal = (data: any, homeDataTotals: any, key: string, page: string) => {
     if (page === 'home') {
@@ -29,7 +30,7 @@ const TotalsRow = ({
     </TableRow>
 )
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: RootState) => ({
     data: state.data.currentData,
     page: state.page.page,
     homeDataTotals: state.data.homeDataTotals

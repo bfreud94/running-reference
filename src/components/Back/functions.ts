@@ -1,12 +1,8 @@
-const getNavLocation = (page: string, year: any) => {
-    if (page === 'month') {
-        return `/${year}`
-    } else {
-        return `/`
-    }
-}
+import { SetMonthAction, SetPageAction, SetYearAction, UpdateDataAction } from '../../redux/types'
 
-const setAppComponentState = (page: any, setMonth: any, setPage: any, setYear: any, updateData: any) => {
+const getNavLocation = (page: string, year: string) => page === 'month' ? `/${year}` : '/'
+
+const setAppComponentState = (page: string, setMonth: SetMonthAction, setPage: SetPageAction, setYear: SetYearAction, updateData: UpdateDataAction) => {
     if (page === 'year') {
         setYear(null)
         setPage('home')
@@ -17,7 +13,7 @@ const setAppComponentState = (page: any, setMonth: any, setPage: any, setYear: a
     updateData(page)
 }
 
-export const onBackClick = (navigate: any, page: any, setMonth: any, setPage: any, setYear: any, updateData: any, year: any) => {
+export const onBackClick = (navigate: any, page: string, setMonth: SetMonthAction, setPage: SetPageAction, setYear: SetYearAction, updateData: UpdateDataAction, year: string) => {
     setAppComponentState(page, setMonth, setPage, setYear, updateData)
     const navLocation = getNavLocation(page, year)
     navigate(navLocation)

@@ -6,7 +6,7 @@ const initialState = {
     year: null
 }
 
-export default (state = initialState, action: any) => {
+export default (state = initialState, action: { payload: any, type: string }) => {
     switch (action.type) {
         case SET_MONTH:
             return {

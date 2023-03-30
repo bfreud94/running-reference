@@ -1,3 +1,5 @@
+import { Activity } from '../../../api/types'
+
 export interface MonthTableRowProps {
-    data: any
+    activity: Activity
 }

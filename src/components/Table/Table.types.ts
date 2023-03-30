@@ -1,8 +1,8 @@
 export interface TablePropTypes extends TableConnectedPropTypes {
-    columns: any
+    columns: string[]
 }
 
 interface TableConnectedPropTypes {
     data: any
-    year: any
+    year: string
 }

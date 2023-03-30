@@ -7,6 +7,7 @@ import { setMonthlyData, setYearlyData } from '../../../redux/actions/dataAction
 import { yearColumnClick } from '../../../functions'
 import styles from './StandardTableRow.styles'
 import { StandardTableRowPropTypes } from './StandardTableRow.types'
+import { RootState } from '../../../redux/types'
 
 const StandardTableRow = ({
     data,
@@ -36,7 +37,7 @@ const StandardTableRow = ({
     )
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: RootState) => ({
     data: state.data.currentData,
     homeData: state.data.homeData,
     page: state.page.page,
