@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { TableCell, TableRow } from '@mui/material'
 import { TotalsRowPropTypes } from './TotalsRow.types'
 import { RootState } from '../../../redux/types'
@@ -29,6 +30,12 @@ const TotalsRow = ({
         <TableCell>{getTotal(data, homeDataTotals, 'distance', page)} miles</TableCell>
     </TableRow>
 )
+
+TotalsRow.propTypes = {
+    data: PropTypes.any.isRequired,
+    homeDataTotals: PropTypes.any.isRequired,
+    page: PropTypes.string.isRequired
+}
 
 const mapStateToProps = (state: RootState) => ({
     data: state.data.currentData,

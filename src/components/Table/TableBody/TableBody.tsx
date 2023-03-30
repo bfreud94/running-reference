@@ -1,38 +1,32 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { TableBody as MuiTableBody } from '@mui/material'
-import StandardTableRow from '../StandardTableRow/StandardTableRow'
-import MonthTableRow from '../MonthTableRow/MonthTableRow'
+import MonthTableBody from './MonthTableBody/MonthTableBody'
+import StandardTableBody from './StandardTableBody/StandardTableBody'
 import TotalsRow from '../TotalsRow/TotalsRow'
 import { RootState } from '../../../redux/types'
-import { Activity } from '../../../api/types'
 import { TableBodyPropTypes } from './TableBody.types'
 
 const TableBody = ({
-    data,
-    page,
-    sortedKeys
+    page
 }: TableBodyPropTypes) => (
     <MuiTableBody>
         {page !== 'month' ? (
-            sortedKeys.map((time: string) => (
-                <StandardTableRow
-                    key={time}
-                    time={time}
-                />
-            ))
+            <StandardTableBody />
         ) : (
-            sortedKeys.map((id: string) => data.activities.find((currentActivity: Activity) => currentActivity.id === id))
-                .map((activity: Activity) => <MonthTableRow activity={activity} key={activity.id} />)
+            <MonthTableBody />
         )}
         <TotalsRow />
     </MuiTableBody>
 )
 
+TableBody.propTypes = {
+    page: PropTypes.string.isRequired
+}
+
 const mapStateToProps = (state: RootState) => ({
-    data: state.data.currentData,
-    page: state.page.page,
-    sortedKeys: state.data.sortedKeys
+    page: state.page.page
 })
 
 export default connect(mapStateToProps)(TableBody)

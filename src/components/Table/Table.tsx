@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import MuiTable from '@mui/material/Table'
 import TableContainer from '@mui/material/TableContainer'
 import TableHeader from './TableHeader/TableHeader'
@@ -27,6 +28,12 @@ const Table = ({
         </div>
     ) : <Loading />
 )
+
+Table.propTypes = {
+    columns: PropTypes.any.isRequired,
+    data: PropTypes.any,
+    year: PropTypes.string
+}
 
 const mapStateToProps = (state: RootState) => ({
     data: state.data.currentData,
