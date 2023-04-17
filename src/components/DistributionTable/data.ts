@@ -1,34 +1,56 @@
 import { Activity } from '../../api/types'
 import { getLabels } from './labels'
-import { meterToMile } from '../../util/formatter'
 
-export const getChartData = (data: any) => ({
-    labels: getLabels(),
-    datasets: getDataSets(data)
-})
+export const getChartData = (data: any, xMin: number, xMax: number) => {
+    const chartData = {
+        labels: getLabels(xMin, xMax),
+        datasets: getDataSets(data, xMin, xMax, false)
+    }
+    const chartDataWithNames = {
+        labels: getLabels(xMin, xMax),
+        datasets: getDataSets(data, xMin, xMax, true)
+    }
+    return [
+        chartData,
+        chartDataWithNames
+    ]
+}
 
-const getDataSets = (data: any) => [{
-    label: 'Idk where this is',
-    data: transformData(data),
+const getDataSets = (data: any, xMin: number, xMax: number, withNames: boolean) => [{
+    label: 'abc',
+    data: transformData(data, xMin, xMax, withNames),
+    backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    categorySpacing: 0
     //barThickness: 5,
     //barValueSpacing: 3,
     //barDatasetSpacing: 2,
     //categoryPercentage: 0.5,
     //barPercentage: 1.0,
-    categorySpacing: 0,
-    backgroundColor: 'rgba(53, 162, 235, 0.5)'
 }]
 
-const transformData = (data: any) => Object.keys(data)
-    .reduce((acc: any, curr: any) => ( curr === '2010' ? [] : [...acc, ...data[curr].activities]), [])
-    .map((activity: Activity) => meterToMile(activity.distance))
-    .filter((curr: number) => curr >= 3 && curr <= 6)
-    .reduce((acc: any, curr: number) => ({
-        ...acc,
-        ...acc[curr] ? {
-            [curr]: acc[curr] + 1
-        } : {
-            [curr]: 1
+const transformData = (data: any, xMin: number, xMax: number, withNames: boolean) => Object.keys(data)
+    .reduce((acc: any, curr: any) => ([...acc, ...data[curr].activities]), [])
+    .filter((activity: Activity) => activity.distance >= xMin && activity.distance <= xMax)
+    .map((activity: Activity) => ({
+            ...activity,
+            distance: activity.distance.toFixed(2)
         }
-    }), {}
-)
+    ))
+    .reduce((acc: any, activity: Activity) => withNames ? milesToActivity(acc, activity) : milesToActivityWithNames(acc, activity), {})
+
+const milesToActivity = (acc: any, activity: Activity) => ({
+    ...acc,
+    ...acc[activity.distance] ? {
+        [activity.distance]: [...acc[activity.distance], activity]
+    } : {
+        [activity.distance]: [activity]
+    }
+})
+const milesToActivityWithNames = (acc: any, activity: Activity) => ({
+    ...acc,
+    ...acc[activity.distance] ? {
+        [activity.distance]: acc[activity.distance] + 1
+    } : {
+        [activity.distance]: 1
+    }
+})

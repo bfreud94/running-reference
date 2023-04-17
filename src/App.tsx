@@ -1,22 +1,30 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getData } from './redux/actions/dataActions'
+import { setInitialData, setYearlyData } from './redux/actions/dataActions'
+import { getData } from './api/index'
 import { RootState } from './redux/types/index'
 import AppHeader from './components/AppHeader/AppHeader'
 import AppRoutes from './components/AppRoutes/AppRoutes'
 import { getRoutes } from './util/routes'
 import { getColumns } from './util/columns'
 
+
 const App = ({
     data,
-    getData,
     month,
+    setInitialData,
+    setYearlyData,
     year
 }) => {
     useEffect(() => {
-        if (!data) {
-            getData()
+        const fetchData = async () => {
+            const data = await getData()
+            setInitialData(data)
+            setYearlyData(data)
+        }
+        if(!data) {
+            fetchData()
         }
     }, [data])
     return (
@@ -32,10 +40,11 @@ const App = ({
 }
 
 App.propTypes = {
-    data: PropTypes.any,
-    getData: PropTypes.any.isRequired,
-    sortedKeys: PropTypes.any.isRequired,
+    data: PropTypes.object,
     month: PropTypes.any,
+    sortedKeys: PropTypes.array.isRequired,
+    setInitialData: PropTypes.func.isRequired,
+    setYearlyData: PropTypes.func.isRequired,
     year: PropTypes.any
 }
 
@@ -46,4 +55,4 @@ const mapStateToProps = (state: RootState) => ({
     year: state.page.year
 })
 
-export default connect(mapStateToProps, { getData })(App)
+export default connect(mapStateToProps, { setInitialData, setYearlyData })(App)

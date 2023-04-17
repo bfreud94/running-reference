@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { TableCell, TableRow } from '@mui/material'
-import { formatDate, meterToMile } from '../../../../util/formatter'
+import { formatDate } from '../../../../util/formatter'
 import { MonthTableRowProps } from './MonthTableRow.types'
 
 const MonthTableRow = ({
@@ -10,7 +10,7 @@ const MonthTableRow = ({
     <TableRow key={activity.id}>
         <TableCell>{formatDate(activity.start_date)}</TableCell>
         <TableCell>{activity.name}</TableCell>
-        <TableCell>{meterToMile(activity.distance)} miles</TableCell>
+        <TableCell>{activity.distance.toFixed(2)} miles</TableCell>
     </TableRow>
 )
 

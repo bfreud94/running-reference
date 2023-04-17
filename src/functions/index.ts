@@ -1,5 +1,4 @@
 import { SetMonthAction, SetPageAction, SetYearAction } from '../redux/types'
-import { meterToMile } from '../util/formatter'
 import { numberToMonthMap } from '../util/calendar'
 import { Activity, Month } from '../api/types'
 
@@ -13,7 +12,7 @@ export const getRunsInAYear = (yearData: any) => (
                 activities: monthlyRuns,
                 totals: {
                     activities: monthlyRuns.length,
-                    distance: meterToMile(monthlyRuns.reduce((acc: number, curr: Activity) => acc + curr.distance, 0))
+                    distance: monthlyRuns.reduce((acc: number, curr: Activity) => acc + curr.distance, 0)
                 }
             }
         }

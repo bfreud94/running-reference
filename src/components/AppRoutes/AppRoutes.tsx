@@ -19,7 +19,7 @@ const AppRoutes = ({
         {routes.map((path: string) => (
             <Route
                 key={path}
-                element={data ? (
+                element={Object.keys(data).length ? (
                     <Table columns={columns} />
                 ) : (
                     <Navigate to='/' />

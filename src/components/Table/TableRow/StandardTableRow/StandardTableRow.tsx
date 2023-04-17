@@ -23,6 +23,9 @@ const StandardTableRow = ({
     year
 }: StandardTableRowPropTypes) => {
     const navigate = useNavigate()
+    if (!data || !data[time]) {
+        return null
+    }
     return (
         <TableRow key={time}>
             <TableCell
@@ -33,7 +36,7 @@ const StandardTableRow = ({
                 {time}
             </TableCell>
             <TableCell>{data[time].totals.activities}</TableCell>
-            <TableCell>{data[time].totals.distance} miles</TableCell>
+            <TableCell>{data[time].totals.distance.toFixed(2)} miles</TableCell>
         </TableRow>
     )
 }
@@ -47,8 +50,8 @@ StandardTableRow.propTypes = {
     setPage: PropTypes.func.isRequired,
     setYear: PropTypes.func.isRequired,
     setYearlyData: PropTypes.func.isRequired,
-    time: PropTypes.string.isRequired,
-    year: PropTypes.string,
+    time: PropTypes.any,
+    year: PropTypes.string
 }
 
 const mapStateToProps = (state: RootState) => ({

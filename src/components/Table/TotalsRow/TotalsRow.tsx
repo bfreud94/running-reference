@@ -14,7 +14,7 @@ const getTotal = (data: any, homeDataTotals: any, key: string, page: string) => 
         ), 0)
         return key === 'activities' ? total : total.toFixed(2)
     } else if (page === 'month') {
-        return data.totals[key]
+        return key === 'distance' ? data.totals[key].toFixed(2) : data.totals[key]
     }
     return 0
 }

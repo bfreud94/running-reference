@@ -1,14 +1,36 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { setPage } from '../../redux/actions/pageActions'
+import { updateData } from '../../redux/actions/dataActions'
+import { AppHeaderProps } from './AppHeader.types'
+import { RootState } from '../../redux/types'
+import HomeButton from './HomeButton/HomeButton'
+import DistributionButton from './DistributionButton/DistributionButton'
 
-const AppHeader = () => {
+const AppHeader = ({
+    page,
+    setPage,
+    updateData
+}: AppHeaderProps) => {
     const navigate = useNavigate()
     return (
         <div>
-            <button onClick={() => navigate('/')}>Home</button>
-            <button onClick={() => navigate('/distribution')}>Distribution</button>
+           <HomeButton navigate={navigate} page={page} setPage={setPage} updateData={updateData} />
+           <DistributionButton navigate={navigate} page={page} setPage={setPage} />
         </div>
     )
 }
 
-export default AppHeader
+AppHeader.propTypes = {
+    page: PropTypes.string.isRequired,
+    setPage: PropTypes.func.isRequired,
+    updateData: PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state: RootState) => ({
+    page: state.page.page
+})
+
+export default connect(mapStateToProps, { setPage, updateData })(AppHeader)

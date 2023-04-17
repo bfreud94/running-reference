@@ -1,6 +1,7 @@
-import { GET_DATA, SET_MONTHLY_DATA, SET_SORTED_KEYS, SET_YEARLY_DATA, UPDATE_DATA } from '../actions/types'
+import { SET_INITIAL_DATA, SET_MONTHLY_DATA, SET_SORTED_KEYS, SET_YEARLY_DATA, UPDATE_DATA } from '../actions/types'
 
 const initialState = {
+    allActivities: null,
     currentData: null,
     homeData: null,
     homeDataTotals: null,
@@ -13,11 +14,12 @@ const initialState = {
 
 export default (state = initialState, action: { payload: any, type: string }) => {
     switch (action.type) {
-        case GET_DATA:
+        case SET_INITIAL_DATA:
             const homeDataTotals = action.payload.totals
             delete action.payload.totals
             return {
                 ...state,
+                allActivities: Object.keys(action.payload).reduce((acc: any, curr: any) => ([...acc, ...action.payload[curr].activities]), []),
                 currentData: action.payload,
                 homeData: action.payload,
                 homeDataTotals,
@@ -49,7 +51,7 @@ export default (state = initialState, action: { payload: any, type: string }) =>
                 yearlyData: action.payload
             }
         case UPDATE_DATA:
-            if (action.payload === 'year') {
+            if (action.payload === 'distribution' || action.payload === 'home' || action.payload === 'year') {
                 return {
                     ...state,
                     currentData: state.homeData,

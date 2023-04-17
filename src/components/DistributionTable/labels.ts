@@ -1,6 +1,6 @@
-export const getLabels = () => {
+export const getLabels = (xMin: number, xMax: number) => {
     const labels = []
-    for (let i = 3; i <= 6; i += 0.01) {
+    for (let i = xMin; i <= xMax; i += 0.01) {
         labels.push(i.toFixed(2))
     }
     return labels

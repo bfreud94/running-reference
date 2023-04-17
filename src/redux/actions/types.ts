@@ -1,4 +1,4 @@
-export const GET_DATA = 'GET_DATA'
+export const SET_INITIAL_DATA = 'SET_INITIAL_DATA'
 export const SET_MONTH = 'SET_MONTH'
 export const SET_PAGE = 'SET_PAGE'
 export const SET_YEAR = 'SET_YEAR'

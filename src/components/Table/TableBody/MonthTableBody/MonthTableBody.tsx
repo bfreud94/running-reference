@@ -13,7 +13,9 @@ const MonthTableBody = ({
     <>
         {sortedKeys
             .map((id: string) => data.activities.find((currentActivity: Activity) => currentActivity.id === id))
-            .map((activity: Activity) => <MonthTableRow activity={activity} key={activity.id} />)
+            .map((activity: Activity) => 
+                <MonthTableRow activity={activity} key={activity.id} />
+            )
         }
     </>
 )

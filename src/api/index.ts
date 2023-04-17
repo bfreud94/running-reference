@@ -1,0 +1,1 @@
+export const getData = async () => (await fetch('http://localhost:8000/api/yearlyRuns')).json()

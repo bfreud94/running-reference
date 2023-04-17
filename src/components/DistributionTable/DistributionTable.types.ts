@@ -1,8 +1,16 @@
 import { CSSProperties } from 'react'
 
-export interface DistributionTableProps {
+export interface DistributionTableProps extends DistributionTableConnectedProps {
     data: any
-    getData: any
+}
+
+interface DistributionTableConnectedProps {
+    allActivities: any
+    page: any
+    setPage: any
+    setInitialData: any
+    setYearlyData: any
+    updateData: any
 }
 
 export interface DistributionTableStyleProps {

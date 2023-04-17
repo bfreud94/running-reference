@@ -1,10 +1,9 @@
 import { Dispatch } from 'redux'
-import { GET_DATA, SET_MONTHLY_DATA, SET_SORTED_KEYS, SET_YEARLY_DATA, UPDATE_DATA } from './types'
+import { SET_INITIAL_DATA, SET_MONTHLY_DATA, SET_SORTED_KEYS, SET_YEARLY_DATA, UPDATE_DATA } from './types'
 
-export const getData = () => async (dispatch: Dispatch) => {
-    const data = await (await fetch('http://localhost:8000/api/yearlyRuns')).json()
+export const setInitialData = (data: any) => async (dispatch: Dispatch) => {
     dispatch({
-        type: GET_DATA,
+        type: SET_INITIAL_DATA,
         payload: data
     })
 }
