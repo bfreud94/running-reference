@@ -30,8 +30,8 @@ const Table = ({
 )
 
 Table.propTypes = {
-    columns: PropTypes.any.isRequired,
-    data: PropTypes.any,
+    columns: PropTypes.array.isRequired,
+    data: PropTypes.object,
     year: PropTypes.string
 }
 

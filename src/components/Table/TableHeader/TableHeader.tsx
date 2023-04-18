@@ -28,11 +28,11 @@ const TableHeader = ({
 )
 
 TableHeader.propTypes = {
-    columns: PropTypes.any.isRequired,
-    data: PropTypes.any.isRequired,
-    page: PropTypes.any.isRequired,
-    setSortedKeys: PropTypes.any.isRequired,
-    sortOrder: PropTypes.any.isRequired
+    columns: PropTypes.array.isRequired,
+    data: PropTypes.object.isRequired,
+    page: PropTypes.string.isRequired,
+    setSortedKeys: PropTypes.func.isRequired,
+    sortOrder: PropTypes.string.isRequired
 }
 
 const mapStateToProps = (state: RootState) => ({

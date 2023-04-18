@@ -1,16 +1,12 @@
 import { CSSProperties } from 'react'
+import { Activity } from '../../api/types'
 
 export interface DistributionTableProps extends DistributionTableConnectedProps {
-    data: any
+    data: object
 }
 
 interface DistributionTableConnectedProps {
-    allActivities: any
-    page: any
-    setPage: any
-    setInitialData: any
-    setYearlyData: any
-    updateData: any
+    allActivities: Activity[]
 }
 
 export interface DistributionTableStyleProps {

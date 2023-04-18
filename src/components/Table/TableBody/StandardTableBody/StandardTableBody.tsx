@@ -19,7 +19,7 @@ const StandardTableBody = ({
 )
 
 StandardTableBody.propTypes = {
-    sortedKeys: PropTypes.any.isRequired
+    sortedKeys: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state: RootState) => ({

@@ -23,9 +23,6 @@ const StandardTableRow = ({
     year
 }: StandardTableRowPropTypes) => {
     const navigate = useNavigate()
-    if (!data || !data[time]) {
-        return null
-    }
     return (
         <TableRow key={time}>
             <TableCell
@@ -42,15 +39,15 @@ const StandardTableRow = ({
 }
 
 StandardTableRow.propTypes = {
-    data: PropTypes.any.isRequired,
-    homeData: PropTypes.any.isRequired,
+    data: PropTypes.object.isRequired,
+    homeData: PropTypes.object.isRequired,
     page: PropTypes.string.isRequired,
     setMonth: PropTypes.func.isRequired,
     setMonthlyData: PropTypes.func.isRequired,
     setPage: PropTypes.func.isRequired,
     setYear: PropTypes.func.isRequired,
     setYearlyData: PropTypes.func.isRequired,
-    time: PropTypes.any,
+    time: PropTypes.string,
     year: PropTypes.string
 }
 

@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { setInitialData, setYearlyData } from './redux/actions/dataActions'
+import { setPage } from './redux/actions/pageActions'
 import { getData } from './api/index'
 import { RootState } from './redux/types/index'
 import AppHeader from './components/AppHeader/AppHeader'
@@ -9,19 +11,21 @@ import AppRoutes from './components/AppRoutes/AppRoutes'
 import { getRoutes } from './util/routes'
 import { getColumns } from './util/columns'
 
-
 const App = ({
     data,
     month,
     setInitialData,
+    setPage,
     setYearlyData,
     year
 }) => {
+    const location = useLocation()
     useEffect(() => {
         const fetchData = async () => {
             const data = await getData()
             setInitialData(data)
             setYearlyData(data)
+            setPage(location.pathname === '/distribution' ? 'distribution' : 'home')
         }
         if(!data) {
             fetchData()
@@ -41,11 +45,12 @@ const App = ({
 
 App.propTypes = {
     data: PropTypes.object,
-    month: PropTypes.any,
+    month: PropTypes.string,
     sortedKeys: PropTypes.array.isRequired,
     setInitialData: PropTypes.func.isRequired,
+    setPage: PropTypes.func.isRequired,
     setYearlyData: PropTypes.func.isRequired,
-    year: PropTypes.any
+    year: PropTypes.string
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -55,4 +60,4 @@ const mapStateToProps = (state: RootState) => ({
     year: state.page.year
 })
 
-export default connect(mapStateToProps, { setInitialData, setYearlyData })(App)
+export default connect(mapStateToProps, { setInitialData, setPage, setYearlyData })(App)

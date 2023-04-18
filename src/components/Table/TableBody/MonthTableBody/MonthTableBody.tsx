@@ -21,8 +21,8 @@ const MonthTableBody = ({
 )
 
 MonthTableBody.propTypes = {
-    data: PropTypes.any.isRequired,
-    sortedKeys: PropTypes.any.isRequired
+    data: PropTypes.object.isRequired,
+    sortedKeys: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state: RootState) => ({

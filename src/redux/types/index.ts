@@ -5,4 +5,5 @@ export type RootState = ReturnType<typeof store.getState>
 export type SetMonthAction = (month: string | null) => Dispatch
 export type SetYearAction = (month: string | null) => Dispatch
 export type SetPageAction = (page: string) => Dispatch
+export type SetSortedKeysAction = (columns: any, sortedKeys: any) => Dispatch
 export type UpdateDataAction = (page: string) => Dispatch

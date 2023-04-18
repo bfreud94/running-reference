@@ -1,4 +1,4 @@
-export const getRoutes = (month: string, year: string) => ([
+export const getRoutes = (month: string, year: string): string[] => ([
     '/',
     `/:${year}`,
     `/:${year}/:${month}`

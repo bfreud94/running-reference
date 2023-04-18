@@ -14,9 +14,6 @@ import { Bar } from 'react-chartjs-2'
 import { RootState } from '../../redux/types'
 import { Activity } from '../../api/types'
 import { formatDate } from '../../util/formatter'
-import { setInitialData, setYearlyData, updateData } from '../../redux/actions/dataActions'
-import { getData } from '../../api/index'
-import { setPage } from '../../redux/actions/pageActions'
 import { getChartData } from './data'
 import styles from './DistributionTableHeader.styles'
 import { DistributionTableProps } from './DistributionTable.types'
@@ -31,35 +28,17 @@ ChartJS.register(
     Legend
 )
 
-const chartOptions = {}
-
 const getLabel = (activity: Activity) => activity.name + ',\t' + formatDate(activity.start_date)
 
 const DistributionTable = ({
     allActivities,
-    data,
-    page,
-    setInitialData,
-    setPage,
-    setYearlyData,
-    updateData
+    data
 }: DistributionTableProps) => {
     const [xMin, setXMin] = useState(3)
     const [xMax, setXMax] = useState(7)
     let chartData: any = {}
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await getData()
-            setInitialData(data)
-            setPage('distribution')
-            setYearlyData(data)
-        }
-        if(!data) {
-            fetchData()
-        }
-    }, [data])
     if (data) {
-        const [transformedData, chartDataWithNames] = getChartData(data, xMin, xMax)
+        const transformedData = getChartData(data, xMin, xMax)
         chartData = transformedData
     }
     return Object.keys(chartData).length > 0 && (
@@ -89,12 +68,7 @@ const DistributionTable = ({
 }
 
 DistributionTable.propTypes = {
-    data: PropTypes.any,
-    page: PropTypes.string.isRequired,
-    setInitialData: PropTypes.func.isRequired,
-    setPage: PropTypes.func.isRequired,
-    setYearlyData: PropTypes.func.isRequired,
-    updateData: PropTypes.func.isRequired
+    data: PropTypes.any
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -102,8 +76,7 @@ const mapStateToProps = (state: RootState) => ({
     data: state.data.homeData,
     sortedKeys: state.data.sortedKeys,
     month: state.page.month,
-    year: state.page.year,
-    page: state.page.page
+    year: state.page.year
 })
 
-export default connect(mapStateToProps, { setInitialData, setPage, setYearlyData, updateData })(DistributionTable)
+export default connect(mapStateToProps)(DistributionTable)

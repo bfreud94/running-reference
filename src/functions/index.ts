@@ -1,6 +1,7 @@
 import { SetMonthAction, SetPageAction, SetYearAction } from '../redux/types'
 import { numberToMonthMap } from '../util/calendar'
 import { Activity, Month } from '../api/types'
+import { NavigateFunction } from 'react-router-dom'
 
 export const getRunsInAYear = (yearData: any) => (
     Object.keys(numberToMonthMap).map(number => {
@@ -29,7 +30,7 @@ const tableRowNavigateLocation = (rowText: string, time: string, year: string) =
 export const yearColumnClick = (
     e: any,
     data: any,
-    navigate: any,
+    navigate: NavigateFunction,
     page: string,
     setMonth: SetMonthAction,
     setMonthlyData: any,

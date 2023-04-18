@@ -1,11 +1,13 @@
 import React from 'react'
+import { NavigateFunction } from 'react-router-dom'
 import { HomeButtonProps } from './HomeButton.types'
+import { SetPageAction, UpdateDataAction } from '../../../redux/types'
 
 const buttonClick = (
-    navigate: any,
-    page: any,
-    setPage: any,
-    updateData: any
+    navigate: NavigateFunction,
+    page: string,
+    setPage: SetPageAction,
+    updateData: UpdateDataAction
 ) => {
     if (page !== 'home') {
         setPage('home')

@@ -1,6 +1,9 @@
+import { NavigateFunction } from 'react-router-dom'
+import { SetPageAction, UpdateDataAction } from '../../../redux/types'
+
 export interface HomeButtonProps {
-    navigate: any
-    page: any
-    setPage: any
-    updateData: any
+    navigate: NavigateFunction
+    page: string
+    setPage: SetPageAction
+    updateData: UpdateDataAction
 }

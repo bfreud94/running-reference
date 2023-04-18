@@ -3,12 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import DistributionTable from '../../components/DistributionTable/DistributionTable'
 import Table from '../../components/Table/Table'
-
-interface AppRoutesProps {
-    columns: any
-    data: any
-    routes: any
-}
+import { AppRoutesProps } from './AppRoutes.types'
 
 const AppRoutes = ({
     columns,
@@ -35,9 +30,9 @@ const AppRoutes = ({
 )
 
 AppRoutes.propTypes = {
-    columns: PropTypes.any.isRequired,
-    data: PropTypes.any,
-    routes: PropTypes.any.isRequired
+    columns: PropTypes.array.isRequired,
+    data: PropTypes.object,
+    routes: PropTypes.array.isRequired
 }
 
 export default AppRoutes

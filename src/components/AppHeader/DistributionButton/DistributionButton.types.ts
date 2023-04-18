@@ -1,5 +1,8 @@
+import { NavigateFunction } from 'react-router-dom'
+import { SetPageAction } from '../../../redux/types'
+
 export interface DistributionButtonProps {
-    navigate: any
-    page: any
-    setPage: any
+    navigate: NavigateFunction
+    page: string
+    setPage: SetPageAction
 }

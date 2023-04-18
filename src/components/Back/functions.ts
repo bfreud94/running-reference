@@ -1,3 +1,4 @@
+import { NavigateFunction } from 'react-router-dom'
 import { SetMonthAction, SetPageAction, SetYearAction, UpdateDataAction } from '../../redux/types'
 
 const getNavLocation = (page: string, year: string) => page === 'month' ? `/${year}` : '/'
@@ -13,7 +14,7 @@ const setAppComponentState = (page: string, setMonth: SetMonthAction, setPage: S
     updateData(page)
 }
 
-export const onBackClick = (navigate: any, page: string, setMonth: SetMonthAction, setPage: SetPageAction, setYear: SetYearAction, updateData: UpdateDataAction, year: string) => {
+export const onBackClick = (navigate: NavigateFunction, page: string, setMonth: SetMonthAction, setPage: SetPageAction, setYear: SetYearAction, updateData: UpdateDataAction, year: string) => {
     setAppComponentState(page, setMonth, setPage, setYear, updateData)
     const navLocation = getNavLocation(page, year)
     navigate(navLocation)

@@ -32,8 +32,8 @@ const TotalsRow = ({
 )
 
 TotalsRow.propTypes = {
-    data: PropTypes.any.isRequired,
-    homeDataTotals: PropTypes.any.isRequired,
+    data: PropTypes.object.isRequired,
+    homeDataTotals: PropTypes.object.isRequired,
     page: PropTypes.string.isRequired
 }
 

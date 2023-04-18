@@ -1,20 +1,10 @@
 import { Activity } from '../../api/types'
 import { getLabels } from './labels'
 
-export const getChartData = (data: any, xMin: number, xMax: number) => {
-    const chartData = {
-        labels: getLabels(xMin, xMax),
-        datasets: getDataSets(data, xMin, xMax, false)
-    }
-    const chartDataWithNames = {
-        labels: getLabels(xMin, xMax),
-        datasets: getDataSets(data, xMin, xMax, true)
-    }
-    return [
-        chartData,
-        chartDataWithNames
-    ]
-}
+export const getChartData = (data: any, xMin: number, xMax: number) => ({
+    labels: getLabels(xMin, xMax),
+    datasets: getDataSets(data, xMin, xMax, false)
+})
 
 const getDataSets = (data: any, xMin: number, xMax: number, withNames: boolean) => [{
     label: 'abc',
@@ -28,7 +18,7 @@ const getDataSets = (data: any, xMin: number, xMax: number, withNames: boolean) 
     //barPercentage: 1.0,
 }]
 
-const transformData = (data: any, xMin: number, xMax: number, withNames: boolean) => Object.keys(data)
+const transformData = (data: object, xMin: number, xMax: number, withNames: boolean) => Object.keys(data)
     .reduce((acc: any, curr: any) => ([...acc, ...data[curr].activities]), [])
     .filter((activity: Activity) => activity.distance >= xMin && activity.distance <= xMax)
     .map((activity: Activity) => ({

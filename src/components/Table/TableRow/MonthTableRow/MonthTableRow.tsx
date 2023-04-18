@@ -15,7 +15,7 @@ const MonthTableRow = ({
 )
 
 MonthTableRow.propTypes = {
-    activity: PropTypes.any.isRequired
+    activity: PropTypes.object.isRequired
 }
 
 export default MonthTableRow

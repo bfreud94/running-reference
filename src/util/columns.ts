@@ -1,6 +1,6 @@
 import { tableModeMap } from '../state'
 
-export const getColumns = (month: string, year: string) => {
+export const getColumns = (month: string, year: string): string[] => {
     if (month && year) {
         return ['Date', 'Name', 'Distance']
     }
