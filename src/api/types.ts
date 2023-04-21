@@ -1,8 +1,10 @@
 export type Activity = {
-    distance: number
-    name: string
-    start_date: string
-    id: string
+    average_speed?: number
+    distance?: number
+    id?: string
+    moving_time?: number
+    name?: string
+    start_date?: string
 }
 
 export type Totals = {

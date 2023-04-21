@@ -18,7 +18,7 @@ const getDataSets = (data: any, xMin: number, xMax: number, withNames: boolean) 
     //barPercentage: 1.0,
 }]
 
-const transformData = (data: object, xMin: number, xMax: number, withNames: boolean) => Object.keys(data)
+const transformData = (data: any, xMin: number, xMax: number, withNames: boolean) => Object.keys(data)
     .reduce((acc: any, curr: any) => ([...acc, ...data[curr].activities]), [])
     .filter((activity: Activity) => activity.distance >= xMin && activity.distance <= xMax)
     .map((activity: Activity) => ({

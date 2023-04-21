@@ -56,3 +56,14 @@ export const yearColumnClick = (
         }
     }
 }
+
+export const getPace = (average_speed: number) => {
+    const pace = 1609.34 / (60 * average_speed)
+    let minutes = Math.floor(pace)
+    let seconds = Math.round((pace - minutes) * 60)
+    if (seconds === 60) {
+        minutes += 1
+        seconds = 0
+    }
+    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds
+}

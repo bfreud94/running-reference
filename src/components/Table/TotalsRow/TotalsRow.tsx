@@ -2,22 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { TableCell, TableRow } from '@mui/material'
+import { getAveragePace, getTotal, getTotalTime } from './functions'
 import { TotalsRowPropTypes } from './TotalsRow.types'
 import { RootState } from '../../../redux/types'
-
-const getTotal = (data: any, homeDataTotals: any, key: string, page: string) => {
-    if (page === 'home') {
-        return homeDataTotals[key]
-    } else if (page === 'year') {
-        const total = Object.keys(data).reduce(((accumulator: number, currentValue: any) =>
-            accumulator += parseFloat(data[currentValue].totals[key])
-        ), 0)
-        return key === 'activities' ? total : total.toFixed(2)
-    } else if (page === 'month') {
-        return key === 'distance' ? data.totals[key].toFixed(2) : data.totals[key]
-    }
-    return 0
-}
+import { formatTime } from '../../../util/formatter'
 
 const TotalsRow = ({
     data,
@@ -27,6 +15,8 @@ const TotalsRow = ({
     <TableRow>
         <TableCell>Totals</TableCell>
         <TableCell>{getTotal(data, homeDataTotals, 'activities', page)}</TableCell>
+        {page === 'month' && <TableCell>{getAveragePace([...data.activities])}</TableCell>}
+        {page === 'month' && <TableCell>{formatTime(getTotalTime([...data.activities]))}</TableCell>}
         <TableCell>{getTotal(data, homeDataTotals, 'distance', page)} miles</TableCell>
     </TableRow>
 )

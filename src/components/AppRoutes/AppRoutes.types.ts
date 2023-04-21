@@ -1,5 +1,5 @@
 export interface AppRoutesProps {
     columns: string[]
-    data: object
+    data: any
     routes: string[]
 }

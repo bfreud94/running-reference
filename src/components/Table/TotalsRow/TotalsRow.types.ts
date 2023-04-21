@@ -1,7 +1,7 @@
 export interface TotalsRowPropTypes extends TotalRowConnectedPropTypes {}
 
 interface TotalRowConnectedPropTypes {
-    data: object
+    data: any
     page: string
     homeDataTotals: object
 }

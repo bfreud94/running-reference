@@ -3,6 +3,6 @@ export interface TablePropTypes extends TableConnectedPropTypes {
 }
 
 interface TableConnectedPropTypes {
-    data: object
+    data: any
     year: string
 }

@@ -2,7 +2,7 @@ import { CSSProperties } from 'react'
 import { Activity } from '../../api/types'
 
 export interface DistributionTableProps extends DistributionTableConnectedProps {
-    data: object
+    data: any
 }
 
 interface DistributionTableConnectedProps {

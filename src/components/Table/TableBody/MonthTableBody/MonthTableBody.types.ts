@@ -1,7 +1,7 @@
 export interface MonthTableBodyProps extends MonthTableBodyConnectedProps {}
 
 interface MonthTableBodyConnectedProps {
-    data: object
+    data: any
     sortedKeys: string[]
 
 }
