@@ -17,7 +17,7 @@ const Table = ({
     year
 }: TablePropTypes) => (
     data ? (
-        <div style={styles.wrapper}>
+        <div style={styles.wrapper(year)}>
             {year && <Back />}
             <TableContainer>
                 <MuiTable>

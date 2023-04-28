@@ -6,8 +6,9 @@ const styles: DistributionTableStyleProps = {
         width: '3000px'
     },
     wrapper: {
+        margin: 'auto',
         overflowX: 'scroll',
-        width: '100%'
+        width: '40%'
     }
 }
 

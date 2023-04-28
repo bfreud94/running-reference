@@ -1,4 +1,6 @@
 export type Activity = {
+    average_cadence?: number
+    average_heartrate?: number
     average_speed?: number
     distance?: number
     id?: string

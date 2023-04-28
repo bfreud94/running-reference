@@ -1,5 +1,5 @@
 export default {
-    wrapper: {
-        padding: '50px'
-    }
+    wrapper: (year: string) => ({
+        padding: year ? '0px 50px' : '50px'
+    })
 }

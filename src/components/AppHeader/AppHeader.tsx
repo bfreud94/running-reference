@@ -8,6 +8,7 @@ import { AppHeaderProps } from './AppHeader.types'
 import { RootState } from '../../redux/types'
 import HomeButton from './HomeButton/HomeButton'
 import DistributionButton from './DistributionButton/DistributionButton'
+import TitleHeader from './TitleHeader/TitleHeader'
 
 const AppHeader = ({
     page,
@@ -19,6 +20,7 @@ const AppHeader = ({
         <div>
            <HomeButton navigate={navigate} page={page} setPage={setPage} updateData={updateData} />
            <DistributionButton navigate={navigate} page={page} setPage={setPage} />
+           {page !== 'distribution' && <TitleHeader />}
         </div>
     )
 }

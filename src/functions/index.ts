@@ -1,29 +1,6 @@
 import { SetMonthAction, SetPageAction, SetYearAction } from '../redux/types'
-import { numberToMonthMap } from '../util/calendar'
-import { Activity, Month } from '../api/types'
 import { NavigateFunction } from 'react-router-dom'
-
-export const getRunsInAYear = (yearData: any) => (
-    Object.keys(numberToMonthMap).map(number => {
-        const monthlyRuns = yearData.activities
-            .reverse()
-            .filter(({ start_date }) => new Date(start_date).getMonth() + 1 === parseInt(number))
-        return {
-            [numberToMonthMap[number]]: {
-                activities: monthlyRuns,
-                totals: {
-                    activities: monthlyRuns.length,
-                    distance: monthlyRuns.reduce((acc: number, curr: Activity) => acc + curr.distance, 0)
-                }
-            }
-        }
-    }).reduce((accumulator: any, currentValue: Record<string, Month>) => ({
-        ...accumulator,
-        ...currentValue
-    }), {})
-)
-
-export const getRunsInAMonth = (data: any, year: string, month: string) => getRunsInAYear(data[year])[month]
+import { getRunsInAMonth, getRunsInAYear } from '../util/runs'
 
 const tableRowNavigateLocation = (rowText: string, time: string, year: string) => /^\d+$/.test(rowText) ? `/${time}` : `/${year}/${time}`
 
@@ -55,15 +32,4 @@ export const yearColumnClick = (
             setYearlyData(yearlyRuns)
         }
     }
-}
-
-export const getPace = (average_speed: number) => {
-    const pace = 1609.34 / (60 * average_speed)
-    let minutes = Math.floor(pace)
-    let seconds = Math.round((pace - minutes) * 60)
-    if (seconds === 60) {
-        minutes += 1
-        seconds = 0
-    }
-    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds
 }

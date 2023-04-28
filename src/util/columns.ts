@@ -6,11 +6,13 @@ export const getColumns = (month: string, year: string): string[] => {
         columns.push(...[
             'Date',
             'Name',
+            'Heart Rate',
+            'Cadence',
             'Distance'
         ])
         if (month) {
-            columns.splice(2, 0, 'Pace')
-            columns.splice(3, 0, 'Time')
+            columns.splice(2, 0, 'Average Pace')
+            columns.splice(3, 0, 'Total Time')
         }
         return columns
     }
