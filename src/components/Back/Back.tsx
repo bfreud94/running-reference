@@ -39,6 +39,6 @@ Back.propTypes = {
 const mapStateToProps = (state: RootState) => ({
     page: state.page.page,
     year: state.page.year
-});
+})
 
 export default connect(mapStateToProps, { setMonth, setPage, updateData, setYear })(Back)

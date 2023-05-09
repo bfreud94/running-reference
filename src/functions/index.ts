@@ -1,8 +1,13 @@
-import { SetMonthAction, SetPageAction, SetYearAction } from '../redux/types'
+import { SetMonthAction, SetMonthlyDataAction, SetPageAction, SetYearAction, SetYearlyDataAction } from '../redux/types'
 import { NavigateFunction } from 'react-router-dom'
 import { getRunsInAMonth, getRunsInAYear } from '../util/runs'
 
 const tableRowNavigateLocation = (rowText: string, time: string, year: string) => /^\d+$/.test(rowText) ? `/${time}` : `/${year}/${time}`
+
+export const getFirstAndLastYears = (data: any) => {
+    const keys = Object.keys(data)
+    return [keys[0], keys[keys.length - 1]]
+}
 
 export const yearColumnClick = (
     e: any,
@@ -10,10 +15,10 @@ export const yearColumnClick = (
     navigate: NavigateFunction,
     page: string,
     setMonth: SetMonthAction,
-    setMonthlyData: any,
+    setMonthlyData: SetMonthlyDataAction,
     setPage: SetPageAction,
     setYear: SetYearAction,
-    setYearlyData: any,
+    setYearlyData: SetYearlyDataAction,
     time: string,
     year: string
 ) => {

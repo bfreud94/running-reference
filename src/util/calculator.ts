@@ -44,7 +44,7 @@ export const getAnyAverage = (activities: Activity[], key: any) => {
     }
     if (activities.length === 1) {
         const oneCase = config.oneCase[transposedKey]
-        return oneCase
+        return oneCase * config.totalMultipliers[transposedKey]
     }
 
     let totalTime: string = getTotalTime(activities)
