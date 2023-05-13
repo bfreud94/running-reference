@@ -16,6 +16,7 @@ const MonthTableRow = ({
         <TableCell>{getTime(activity.moving_time)}</TableCell>
         <TableCell>{getAnyActivityProperty(activity, 'average_heartrate', 0)}</TableCell>
         <TableCell>{getAnyActivityProperty(activity, 'average_cadence', 0) * 2}</TableCell>
+        <TableCell>{getAnyActivityProperty(activity, 'suffer_score', 0)}</TableCell>
         <TableCell>{getAnyActivityProperty(activity, 'distance', 0).toFixed(2)} miles</TableCell>
     </TableRow>
 )

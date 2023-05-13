@@ -8,6 +8,7 @@ export const getColumns = (month: string, year: string): string[] => {
             'Name',
             'Heart Rate',
             'Cadence',
+            'Relative Effort',
             'Distance'
         ])
         if (month) {

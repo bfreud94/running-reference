@@ -7,6 +7,7 @@ export type Activity = {
     moving_time?: number
     name?: string
     start_date?: string
+    suffer_score?: string
 }
 
 export type Totals = {

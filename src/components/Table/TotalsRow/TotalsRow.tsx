@@ -21,6 +21,7 @@ const TotalsRow = ({
         {page === 'month' && <TableCell>{formatTime(getTotalTime([...data.activities]))}</TableCell>}
         {page === 'month' && <TableCell>{getAnyAverage([...data.activities], 'average_heartrate')}</TableCell>}
         {page === 'month' && <TableCell>{getAnyAverage([...data.activities], 'average_cadence')}</TableCell>}
+        {page === 'month' && <TableCell>{getAnyAverage([...data.activities], 'suffer_score')}</TableCell>}
         <TableCell>{getTotal(data, homeDataTotals, 'distance', page)} miles</TableCell>
     </TableRow>
 )

@@ -17,20 +17,24 @@ const getTotalTimeInSeconds = (hours: number, minutes: number, seconds: number):
 const anyAverageConfig = (activities: Activity[], key: any) => ({
     apiToStringCase: {
         average_cadence: 'cadence',
-        average_heartrate: 'heartRate'
+        average_heartrate: 'heartRate',
+        suffer_score: 'relativeEffort'
     },
     zeroCase: {
         cadence: 0,
+        relativeEffort: 0,
         heartRate: 0
     },
     ...(activities.length && {
         oneCase: {
             cadence: activities[0][key],
+            relativeEffort: activities[0][key],
             heartRate: activities[0][key]
         }
     }),
     totalMultipliers: {
         cadence: 2,
+        relativeEffort: 1,
         heartRate: 1
     }
 })
