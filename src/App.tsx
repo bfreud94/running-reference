@@ -11,6 +11,8 @@ import AppRoutes from './components/AppRoutes/AppRoutes'
 import { getRoutes } from './util/routes'
 import { getColumns } from './util/columns'
 
+const getPathName = (pathname: string) => pathname === '/distribution' || '/githubTable' ? pathname.substring(1) : 'home'
+
 const App = ({
     data,
     month,
@@ -25,7 +27,7 @@ const App = ({
             const data = await getData()
             setInitialData(data)
             setYearlyData(data)
-            setPage(location.pathname === '/distribution' ? 'distribution' : 'home')
+            setPage(getPathName(location.pathname))
         }
         if(!data) {
             fetchData()

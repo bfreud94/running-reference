@@ -2,6 +2,7 @@ import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import DistributionTable from '../../components/DistributionTable/DistributionTable'
+import GitHubTable from '../../components/GitHubTable/GitHubTable'
 import Table from '../../components/Table/Table'
 import { AppRoutesProps } from './AppRoutes.types'
 
@@ -25,6 +26,10 @@ const AppRoutes = ({
         <Route
             element={<DistributionTable />}
             path={`/distribution`}
+        />
+        <Route
+            element={<GitHubTable />}
+            path={`/githubTable`}
         />
     </Routes>
 )
