@@ -11,7 +11,7 @@ import AppRoutes from './components/AppRoutes/AppRoutes'
 import { getRoutes } from './util/routes'
 import { getColumns } from './util/columns'
 
-const getPathName = (pathname: string) => pathname === '/distribution' || '/githubTable' ? pathname.substring(1) : 'home'
+const getPathName = (pathname: string) => pathname === '/distribution' || pathname === '/githubTable' ? pathname.substring(1) : 'home'
 
 const App = ({
     data,
