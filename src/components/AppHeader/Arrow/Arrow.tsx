@@ -10,6 +10,7 @@ import { RootState, SetMonthAction, SetMonthlyDataAction, SetYearAction, SetYear
 import { getRunsInAMonth, getRunsInAYear } from '../../../util/runs'
 import { getFirstAndLastYears } from '../../../functions'
 import { getNextMonthAndYear } from '../../../util/calendar'
+import { ArrowBack, ArrowForward } from '@mui/icons-material'
 
 const getYear = (isLeft: boolean, year: string) => (isLeft ? parseInt(year) - 1 : parseInt(year) + 1).toString()
 
@@ -53,9 +54,9 @@ const Arrow = ({
     const navigate = useNavigate()
     return (
         isLeft ? (
-            <i style={styles.arrow} className='fas' onClick={() => onArrowClick(homeData, isLeft, month, navigate, setMonth, setMonthlyData, setYear, setYearlyData, year)}>&#xf359;</i>
+            <ArrowBack style={styles.arrow} onClick={() => onArrowClick(homeData, isLeft, month, navigate, setMonth, setMonthlyData, setYear, setYearlyData, year)} />
         ) : (
-            <i style={styles.arrow} className='fas' onClick={() => onArrowClick(homeData, isLeft, month, navigate, setMonth, setMonthlyData, setYear, setYearlyData, year)}>&#xf35a;</i>
+            <ArrowForward style={styles.arrow} onClick={() => onArrowClick(homeData, isLeft, month, navigate, setMonth, setMonthlyData, setYear, setYearlyData, year)} />
         )
     )
 }
