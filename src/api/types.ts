@@ -9,13 +9,30 @@ export type Activity = {
     start_date?: string
     suffer_score?: string
 }
-
 export type Totals = {
     activities: number
-    distance: string
+    distance: number
 }
 
-export type Month = {
-    activities: Activity[]
+export interface ActivitiesApiDocument {
+    2010: YearActivities
+    2011: YearActivities
+    2012: YearActivities
+    2013: YearActivities
+    2014: YearActivities
+    2015: YearActivities
+    2016: YearActivities
+    2017: YearActivities
+    2018: YearActivities
+    2019: YearActivities
+    2020: YearActivities
+    2021: YearActivities
+    2022: YearActivities
+    2023: YearActivities
+    totals: Totals
+}
+
+export interface YearActivities {
+    activities: Array<Activity>
     totals: Totals
 }

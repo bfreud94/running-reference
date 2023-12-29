@@ -1,65 +1,24 @@
-import React, { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { setInitialData, setYearlyData } from './redux/actions/dataActions'
-import { setPage } from './redux/actions/pageActions'
-import { getData } from './api/index'
-import { RootState } from './redux/types/index'
-import AppHeader from './components/AppHeader/AppHeader'
-import AppRoutes from './components/AppRoutes/AppRoutes'
-import { getRoutes } from './util/routes'
-import { getColumns } from './util/columns'
+import React from 'react'
+import {
+	QueryClient,
+	QueryClientProvider
+  } from '@tanstack/react-query'
+import Table from './components/Table/Table'
+import TableProvider from './components/context'
+import { useRoutes } from 'react-router-dom'
 
-const getPathName = (pathname: string) => pathname === '/distribution' || pathname === '/githubTable' ? pathname.substring(1) : 'home'
+const queryClient = new QueryClient()
 
-const App = ({
-    data,
-    month,
-    setInitialData,
-    setPage,
-    setYearlyData,
-    year
-}) => {
-    const location = useLocation()
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await getData()
-            setInitialData(data)
-            setYearlyData(data)
-            setPage(getPathName(location.pathname))
-        }
-        if(!data) {
-            fetchData()
-        }
-    }, [data])
-    return (
-        <>
-            <AppHeader />
-            <AppRoutes
-                columns={getColumns(month, year)}
-                data={data || {}}
-                routes={getRoutes(month, year)}
-            />
-        </>
-    )
-}
+const App = () => (
+	<QueryClientProvider client={queryClient}>
+		<TableProvider>
+			{useRoutes([
+				{ path: '/', element: <Table /> },
+				{ path: '/:year', element: <Table /> },
+				{ path: '/:year/:month', element: <Table /> },
+			])}
+		</TableProvider>
+	</QueryClientProvider>
+)
 
-App.propTypes = {
-    data: PropTypes.object,
-    month: PropTypes.string,
-    sortedKeys: PropTypes.array.isRequired,
-    setInitialData: PropTypes.func.isRequired,
-    setPage: PropTypes.func.isRequired,
-    setYearlyData: PropTypes.func.isRequired,
-    year: PropTypes.string
-}
-
-const mapStateToProps = (state: RootState) => ({
-    data: state.data.currentData,
-    sortedKeys: state.data.sortedKeys,
-    month: state.page.month,
-    year: state.page.year
-})
-
-export default connect(mapStateToProps, { setInitialData, setPage, setYearlyData })(App)
+export default App
