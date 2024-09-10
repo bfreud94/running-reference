@@ -1,43 +1,45 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
-import MuiTable from '@mui/material/Table'
-import TableContainer from '@mui/material/TableContainer'
-import TableHeader from './TableHeader/TableHeader'
-import TableBody from './TableBody/TableBody'
-import Back from '../Back/Back'
+import React, { useEffect } from 'react'
+import { 
+	TableContainer,
+	Table as MuiTable
+} from '@mui/material'
+import { useLocation } from 'react-router-dom'
+import { useTableState } from '../hooks'
+import TableBody from '../TableBody/TableBody'
+import TableHeader from '../TableHeader/TableHeader'
 import Loading from '../Loading/Loading'
-import styles from './Table.styles'
-import { TablePropTypes } from './Table.types'
-import { RootState } from '../../redux/types'
+import { Page } from '../types'
 
-const Table = ({
-    columns,
-    data,
-    year
-}: TablePropTypes) => (
-    data ? (
-        <div style={styles.wrapper(year)}>
-            {year && <Back />}
-            <TableContainer>
-                <MuiTable>
-                    <TableHeader columns={columns} />
-                    <TableBody />
-                </MuiTable>
-            </TableContainer>
-        </div>
-    ) : <Loading />
-)
 
-Table.propTypes = {
-    columns: PropTypes.array.isRequired,
-    data: PropTypes.object,
-    year: PropTypes.string
+const Table = () => {
+	const { changePage, currentPage, data, isLoading } = useTableState()
+	const location = useLocation()
+
+	useEffect(() => {
+		if (!isLoading && Object.keys(data.currentData).length > 0) {
+			const queryParams = location.pathname.split('/').filter(Boolean)
+			if (queryParams.length === 1) {
+				if (Page.YEAR !== currentPage)  {
+					changePage(Page.YEAR, queryParams[0])
+				}
+			} else if (queryParams.length === 2) {
+				if (Page.MONTH !== currentPage)  {
+					changePage(Page.MONTH, queryParams[1])
+				}
+			}
+		}
+	}, [data, isLoading])
+
+	return (
+		<TableContainer>
+			{isLoading ? <Loading /> : (
+				<MuiTable>
+					<TableHeader />
+					<TableBody />
+				</MuiTable>
+			)}
+		</TableContainer>
+	)
 }
 
-const mapStateToProps = (state: RootState) => ({
-    data: state.data.currentData,
-    year: state.page.year
-})
-
-export default connect(mapStateToProps)(Table)
+export default Table
