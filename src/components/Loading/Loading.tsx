@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { FC } from 'react'
 import ReactLoading from 'react-loading'
-import './Loading.css'
+import styles from './Loading.styles'
 
-const Loading = () => (
-    <div className='wrapper'>
+const Loading: FC = () => (
+    <div style={styles.wrapper}>
         <ReactLoading type={'balls'} color={'blue'} height={'5%'} width={'5%'} />
     </div>
 )

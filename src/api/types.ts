@@ -1,12 +1,12 @@
 export type Activity = {
     average_cadence?: number
-    average_heartrate?: number
+    average_heartrate: number
     average_speed?: number
-    distance?: number
-    id?: string
+    distance: number
+    id: string
     moving_time?: number
-    name?: string
-    start_date?: string
+    name: string
+    start_date: string
     suffer_score?: string
 }
 export type Totals = {
@@ -29,6 +29,7 @@ export interface ActivitiesApiDocument {
     2021: YearActivities
     2022: YearActivities
     2023: YearActivities
+    2024: YearActivities
     totals: Totals
 }
 

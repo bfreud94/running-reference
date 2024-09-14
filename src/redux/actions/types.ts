@@ -1,8 +1,0 @@
-export const SET_INITIAL_DATA = 'SET_INITIAL_DATA'
-export const SET_MONTH = 'SET_MONTH'
-export const SET_PAGE = 'SET_PAGE'
-export const SET_YEAR = 'SET_YEAR'
-export const SET_MONTHLY_DATA = 'SET_MONTHLY_DATA'
-export const SET_SORTED_KEYS = 'SET_SORTED_KEYS'
-export const SET_YEARLY_DATA = 'SET_YEARLY_DATA'
-export const UPDATE_DATA = 'UPDATE_DATA'

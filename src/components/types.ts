@@ -1,6 +1,5 @@
-import { Dispatch, ReactElement, ReactNode, SetStateAction } from 'react'
+import { Dispatch, ReactElement, SetStateAction } from 'react'
 import { Activity, ActivitiesApiDocument, Totals } from '../api/types'
-import { NavigateFunction, Params, RouteObject } from 'react-router-dom'
 
 export enum Page {
 	HOME = 'home',
@@ -17,47 +16,32 @@ export type Month = {
     totals: Totals
 }
 
-export type CurrentDataType = HomeDataType | YearDataType
+export type MonthDataType = Activity[]
+
+export type CurrentDataType = HomeDataType | YearDataType | MonthDataType
 
 export type CurrentTotalsType = Totals
 
-// fix this type
-export type HomeDataType = Omit<ActivitiesApiDocument, 'totals'> | object
+export type HomeDataType = Omit<ActivitiesApiDocument, 'totals'>
 
-type HomeTotalsType = Totals | object
+type HomeTotalsType = Totals
 
 export type YearDataType = {
-	January?: Month
-	Februrary?: Month
-	March?: Month
-	April?: Month
-	May?: Month
-	June?: Month
-	July?: Month
-	August?: Month
-	September?: Month
-	October?: Month
-	November?: Month
-	December?: Month
+	January: Month
+	Februrary: Month
+	March: Month
+	April: Month
+	May: Month
+	June: Month
+	July: Month
+	August: Month
+	September: Month
+	October: Month
+	November: Month
+	December: Month
 }
 
-type YearTotalsType = Totals | object
-
-/*
-export type StateData = {
-	currentData: CurrentDataType
-	homeData: HomeDataType
-	// monthData: {},
-	yearlyData: YearDataType
-}
-
-export type StateTotals = {
-	currentTotals: CurrentTotalsType,
-	homeTotals: HomeTotalsType,
-	// monthTotals: {},
-	yearlyTotals: YearTotalsType
-}
-*/
+type YearTotalsType = Totals
 
 export type StateDataAndTotals = {
 	apiResponse: ActivitiesApiDocument
@@ -69,14 +53,16 @@ export type ChangePageFunctionType = (destination: Page, timeframe: string) => v
 
 export interface TableContextType {
 	currentPage: Page
-	changePage?: ChangePageFunctionType
+	changePage: ChangePageFunctionType
 	data: StateDataAndTotals
 	headers: Array<string>
 	isLoading: boolean
-	setCurrentPage?: Dispatch<SetStateAction<{}>>
+	isRunning: boolean
+	setCurrentPage?: Dispatch<SetStateAction<Page>>
 	setHomeDataAndTotals?: Dispatch<SetStateAction<{}>>
 	setMonthDataAndTotals?: Dispatch<SetStateAction<{}>>
 	setYearlyDataAndTotals?: Dispatch<SetStateAction<{}>>
+	setIsRunning: Dispatch<SetStateAction<boolean>>
 
 }
 

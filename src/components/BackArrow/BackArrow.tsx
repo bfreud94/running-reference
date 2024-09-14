@@ -1,9 +1,9 @@
 import React from 'react'
-import { ArrowBack } from '@mui/icons-material'
-import { useTableState } from '../hooks'
-import { getPreviousPage } from '../../functions'
-import { getTimeframe } from './functions'
 import { useLocation } from 'react-router-dom'
+import { ArrowBack } from '@mui/icons-material'
+import { getPreviousPage } from '../../functions'
+import { useTableState } from '../../hooks'
+import { getTimeframe } from './functions'
 import styles from './BackArrow.styles'
 
 const BackArrow = () => {

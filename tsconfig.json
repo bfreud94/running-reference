@@ -1,15 +1,19 @@
 {
-    "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "target": "es6",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "noResolve": false,
-        "noImplicitAny": false,
-        "removeComments": true,
-        "sourceMap": true,
-        "jsx": "react",
-        "outDir": "public"
-    },
-    "files": ["src/index.js"]
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"target": "es6",
+		"module": "commonjs",
+		"lib": ["dom", "es2017"],
+		"allowJs": true,
+		"jsx": "react",
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"strict": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "dist", "public"]
 }
