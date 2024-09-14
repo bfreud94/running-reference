@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react'
-import { numberToMonthMap } from '../components/initialData'
-import { Activity, YearActivities } from '../api/types'
-import { Month, Page, StateDataAndTotals, YearDataType } from '../components/types'
 import { NavigateFunction, Params } from 'react-router-dom'
+import { numberToMonthMap } from '../components/initialData'
+import { ActivitiesApiDocument, Activity, YearActivities } from '../api/types'
+import { CurrentDataType, HomeDataType, Month, MonthDataType, Page, StateDataAndTotals, YearDataType } from '../components/types'
 
 export const getYearlyData = (yearData: YearActivities) => 
 	Object.keys(numberToMonthMap).map((month: string) => {
@@ -10,7 +10,7 @@ export const getYearlyData = (yearData: YearActivities) =>
             .reverse()
             .filter(({ start_date }) => new Date(start_date).getMonth() + 1 === parseInt(month))
         return {
-            [numberToMonthMap[month]]: {
+            [numberToMonthMap[month as unknown as keyof typeof numberToMonthMap]]: {
                 activities: monthlyRuns,
                 totals: {
                     activities: monthlyRuns.length,
@@ -18,22 +18,21 @@ export const getYearlyData = (yearData: YearActivities) =>
                 }
             }
         }
-    }).reduce((accumulator: YearDataType, currentValue: Month) => ({
+    }).reduce((accumulator: YearDataType, currentValue: { [key: string]: Month }) => ({
         ...accumulator,
         ...currentValue
-    }), {})
+    }), {} as YearDataType)
 
 export const changePageHelper = (
 	destination: Page,
 	data: StateDataAndTotals,
 	navigate: NavigateFunction,
-	queryParams: any,
+	queryParams: Params,
 	setData: Dispatch<SetStateAction<StateDataAndTotals>>,
 	setCurrentPage: Dispatch<SetStateAction<Page>>,
 	timeframe: string
 ) => {
 	setCurrentPage(destination)
-
 	switch (destination) {
 		case Page.HOME:
 			const { totals, ...apiResponse } = data.apiResponse
@@ -47,18 +46,18 @@ export const changePageHelper = (
 		case Page.YEAR:
 			setData({
 				...data,
-				currentData: getYearlyData(data.apiResponse[timeframe]),
-				currentTotals: data.apiResponse[timeframe].totals
+				currentData: getYearlyData(data.apiResponse[timeframe as unknown as keyof HomeDataType]),
+				currentTotals: data.apiResponse[timeframe as unknown as keyof HomeDataType].totals
 			})
 			navigate(`/${timeframe}`)
 			break
 		case Page.MONTH:
-			const isRefreshed = !data.currentData[timeframe]
-			const yearData = getYearlyData(data.apiResponse[queryParams.year])
+			const isRefreshed = !data.currentData[timeframe as keyof CurrentDataType]
+			const yearData = getYearlyData(data.apiResponse[queryParams.year as unknown as keyof HomeDataType])
 			setData({
 				...data,
-				currentData: isRefreshed ? yearData[timeframe].activities : data.currentData[timeframe].activities,
-				currentTotals: isRefreshed ? yearData[timeframe].totals : data.currentData[timeframe].totals
+				currentData: isRefreshed ? yearData[timeframe as keyof YearDataType].activities : (data.currentData as YearDataType)[timeframe as keyof YearDataType].activities,
+				currentTotals: isRefreshed ? yearData[timeframe as keyof YearDataType].totals : (data.currentData as YearDataType)[timeframe as keyof YearDataType].totals
 			})
 			navigate(`/${queryParams.year}/${timeframe}`)
 			break
@@ -74,9 +73,18 @@ export const getTimeframe = (currentPage: Page, isGoingBack: boolean, queryParam
 	}
 }
 
-export const getHeaders = (page: Page): Array<string> => page === Page.MONTH ? (
-	['Date', 'Activity Name', 'Miles Run']
-) : ['Years', 'Total Activities', 'Total Distance']
+export const getHeaders = (page: Page): Array<string> => {
+	switch (page) {
+		case Page.HOME:
+			return ['Years', 'Total Activities', 'Average Heart Rate', 'Total Time', 'Total Distance']
+		case Page.YEAR:
+			return ['Years', 'Total Activities', 'Average Heart Rate', 'Total Time', 'Total Distance']
+		case Page.MONTH:
+			return ['Date', 'Activity Name', 'Average Heart Rate', 'Time', 'Miles Run']
+		default:
+			return []
+	}
+}
 
 export const getNextPage = (page: Page) => {
 	let nextPage = Page.HOME

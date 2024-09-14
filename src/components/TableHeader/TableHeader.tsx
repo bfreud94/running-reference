@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { 
 	TableCell,
 	TableHead,
 	TableRow,
 } from '@mui/material'
-import { useTableState } from '../hooks'
 import BackArrow from '../BackArrow/BackArrow'
+import { useTableState } from '../../hooks'
 
-const TableHeader = () => {
+const TableHeader: FC = () => {
     const { currentPage, headers } = useTableState()
     return (
         <TableHead>

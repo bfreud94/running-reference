@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { 
 	TableContainer,
 	Table as MuiTable
 } from '@mui/material'
-import { useLocation } from 'react-router-dom'
-import { useTableState } from '../hooks'
+import Loading from '../Loading/Loading'
 import TableBody from '../TableBody/TableBody'
 import TableHeader from '../TableHeader/TableHeader'
-import Loading from '../Loading/Loading'
+import { getButtonLabel } from './functions'
+import { useTableState } from '../../hooks'
 import { Page } from '../types'
 
-
-const Table = () => {
-	const { changePage, currentPage, data, isLoading } = useTableState()
+const Table: FC = () => {
+	const { changePage, currentPage, data, isLoading, isRunning, setIsRunning } = useTableState()
 	const location = useLocation()
 
 	useEffect(() => {
@@ -32,6 +32,10 @@ const Table = () => {
 
 	return (
 		<TableContainer>
+			<button onClick={() => {
+				setIsRunning(!isRunning)
+				changePage(Page.HOME, '')
+			}}>{getButtonLabel(isRunning)}</button>
 			{isLoading ? <Loading /> : (
 				<MuiTable>
 					<TableHeader />
