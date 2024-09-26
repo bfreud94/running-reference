@@ -1,11 +1,13 @@
 import { Activity } from '../../../api/types'
+import { CurrentDataType } from '../../types'
 
 export interface TableRowProps {
 	timeframe: string
+	tableData: CurrentDataType
 }
 
 export type ActivitiesAndDistanceType = {
 	activity: Activity
-	activities: number
+	totalActivities: number
 	distance: number
 }

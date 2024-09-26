@@ -1,5 +1,6 @@
 import { Activity } from '../api/types'
-import { CurrentDataType, HomeDataType, MonthDataType, YearDataType } from '../components/types'
+import { CurrentDataType, HomeDataType, MonthDataType, Page, YearDataType } from '../components/types'
+import { TimeObject } from './types'
 
 export const formatDate = (dateString: string) => new Date(dateString).toDateString().substring(4)
 
@@ -91,22 +92,27 @@ export const secondsToTime = (totalSeconds: number): string => {
 }
   
 
-export const secondsToHoursMinutesSeconds = (currentData: MonthDataType): string => {
+export const getFormattedTime = (currentData: MonthDataType): string => {
 	const totalMovingTime = currentData.reduce((acc: number, activity: Activity) => {
 		acc += activity.moving_time || 0
 		return acc
 	}, 0)
 
-	const hours = Math.floor(totalMovingTime / 3600)
-	const minutes = Math.floor((totalMovingTime % 3600) / 60).toString().padStart(2, '0')
-	const seconds = (totalMovingTime % 60).toString().padStart(2, '0')
+	const { hours, minutes, seconds } = getTimeObjectFromTotalSeconds(totalMovingTime)
+
+	const formattedSeconds = getTimeWithLeadingZero(seconds)
+	const formattedMinutes = getTimeWithLeadingZero(minutes)
 
 	if (hours > 0) {
-		return `${hours}:${minutes}:${seconds}`
+		return `${hours}:${formattedMinutes}:${formattedSeconds}`
+	} else if (hours === 0) {
+		return `${formattedMinutes}:${formattedSeconds}`
 	} else {
-		return `${minutes}:${seconds}`
+		return '00:00'
 	}
 }
+
+export const getTimeWithLeadingZero = (time: number): string => time.toString().padStart(2, '0')
 
 export const getTotalTimeForYear = (currentData: CurrentDataType) => {
 	const totalMovingTime = Object.keys(currentData).reduce((acc: number, month: string) => {
@@ -119,13 +125,49 @@ export const getTotalTimeForYear = (currentData: CurrentDataType) => {
 		return acc
 	}, 0)
 
-	const hours = Math.floor(totalMovingTime / 3600)
-	const minutes = Math.floor((totalMovingTime % 3600) / 60)
-	const seconds = (totalMovingTime % 60).toString().padStart(2, '0')
+	const { hours, minutes, seconds } = getTimeObjectFromTotalSeconds(totalMovingTime)
+
+	const formattedSeconds = getTimeWithLeadingZero(seconds)
+	const formattedMinutes = getTimeWithLeadingZero(minutes)
 
 	if (hours > 0) {
-		return `${hours}:${minutes}:${seconds}`
+		return `${hours}:${formattedMinutes}:${formattedSeconds}`
 	} else {
-		return `${minutes}:${seconds}`
+		return `${formattedMinutes}:${formattedSeconds}`
 	}
+}
+
+export const getTimeObjectFromTotalSeconds = (totalSeconds: number): TimeObject => {
+	const hours = Math.floor(totalSeconds / 3600)
+	const minutes = Math.floor((totalSeconds % 3600) / 60)
+	const seconds = totalSeconds % 60
+	
+	return {
+		hours,
+		minutes,
+		seconds
+	}
+}
+
+export const getAveragePace = (activities: Activity[]): string => {
+	let totalDistance = 0
+	let totalPace = 0
+	
+	activities.forEach((activity: Activity) => {
+		totalPace += activity.moving_time || 0
+		totalDistance += activity.distance || 0
+	})
+
+	if (totalPace === 0) {
+		return '0:00'
+	}
+	
+	const { hours, minutes, seconds } = getTimeObjectFromTotalSeconds(totalPace)
+	const totalTimeInSeconds = (hours * 3600) + (minutes * 60) + seconds
+	
+	const paceInSeconds = totalTimeInSeconds / totalDistance
+	const paceMinutes = Math.floor(paceInSeconds / 60)
+	const paceSeconds = Math.round(paceInSeconds % 60)
+	
+	return `${paceMinutes}:${paceSeconds < 10 ? '0' : ''}${paceSeconds}`
 }
