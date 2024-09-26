@@ -63,7 +63,6 @@ export interface TableContextType {
 	setMonthDataAndTotals?: Dispatch<SetStateAction<{}>>
 	setYearlyDataAndTotals?: Dispatch<SetStateAction<{}>>
 	setIsRunning: Dispatch<SetStateAction<boolean>>
-
 }
 
 export type GetDataAndTotals = {

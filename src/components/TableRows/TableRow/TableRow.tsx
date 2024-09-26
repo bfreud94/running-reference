@@ -4,9 +4,9 @@ import {
 	TableRow as MuiTableRow
 } from '@mui/material'
 import LeftMostRow from '../LeftMostRow/LeftMostRow'
-import { getActivitiesAndDistance, openActivity } from './functions'
+import { getActivitiesAndDistance, getAllActivities, openActivity } from './functions'
 import { useTableState } from '../../../hooks'
-import { getAverageHeartRateForHome, getAverageHeartRateForYear, getHeartRateForRun, roundNumber, secondsToHoursMinutesSeconds, secondsToTime } from '../../../functions'
+import { getAverageHeartRateForHome, getAverageHeartRateForYear, getAveragePace, getFormattedTime, getHeartRateForRun, roundNumber, secondsToTime } from '../../../functions'
 import { Activity } from '../../../api/types'
 import { CurrentDataType, HomeDataType, Page, YearDataType } from '../../types'
 import { TableRowProps } from './TableRow.types'
@@ -16,10 +16,12 @@ const getTimeSpecificTableCells = (activity: Activity, currentPage: Page, data: 
 	if (currentPage === Page.YEAR) {
 		data = data as YearDataType
 		const key = timeframe as unknown as keyof YearDataType
+		const activities = getAllActivities(data, currentPage, timeframe)
 		tableCells = (
 			<>
 				<TableCell>{getAverageHeartRateForYear(data, key)}</TableCell>
-				<TableCell>{secondsToHoursMinutesSeconds(data[key].activities)}</TableCell>
+				<TableCell>{getFormattedTime(data[key].activities)}</TableCell>
+				<TableCell>{getAveragePace(activities)}</TableCell>
 			</>
 		)
 	} else if (currentPage === Page.MONTH) {
@@ -27,14 +29,17 @@ const getTimeSpecificTableCells = (activity: Activity, currentPage: Page, data: 
 			<>
 				<TableCell>{getHeartRateForRun(activity)}</TableCell>
 				<TableCell>{secondsToTime(activity.moving_time || 0)}</TableCell>
+				<TableCell>{getAveragePace([activity])}</TableCell>
 			</>
 		)
 	} else if (currentPage === Page.HOME) {
 		data = data as HomeDataType
+		const activities = getAllActivities(data, currentPage, timeframe)
 		tableCells = (
 			<>
 				<TableCell>{getAverageHeartRateForHome(data, timeframe)}</TableCell>
-				<TableCell>{secondsToHoursMinutesSeconds(data[timeframe as unknown as keyof HomeDataType].activities)}</TableCell>
+				<TableCell>{getFormattedTime(data[timeframe as unknown as keyof HomeDataType].activities)}</TableCell>
+				<TableCell>{getAveragePace(activities)}</TableCell>
 			</>
 		)
 	}
@@ -42,16 +47,16 @@ const getTimeSpecificTableCells = (activity: Activity, currentPage: Page, data: 
 }
 
 const TableRow: FC<TableRowProps> = ({
-	timeframe
+	timeframe,
+	tableData
 }) => {
-	const { currentPage, data } = useTableState()
-	const currentData = data.currentData
-	const { activity, activities, distance } = getActivitiesAndDistance(currentData, currentPage, timeframe)
+	const { currentPage } = useTableState()
+	const { activity, totalActivities, distance } = getActivitiesAndDistance(tableData, currentPage, timeframe)
 	return (
 		<MuiTableRow onClick={() => openActivity(activity, currentPage)}>
-			<LeftMostRow timeframe={timeframe} />
-			<TableCell>{currentPage === Page.MONTH ? activity.name : activities}</TableCell>
-			{getTimeSpecificTableCells(activity, currentPage, currentData, timeframe)}
+			<LeftMostRow tableData={tableData} timeframe={timeframe} />
+			<TableCell>{currentPage === Page.MONTH ? activity.name : totalActivities}</TableCell>
+			{getTimeSpecificTableCells(activity, currentPage, tableData, timeframe)}
 			<TableCell>{roundNumber(distance, 2)}</TableCell>
 		</MuiTableRow>
 	)

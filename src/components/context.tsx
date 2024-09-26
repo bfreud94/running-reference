@@ -1,5 +1,5 @@
 import React, { createContext, FC, useCallback, useEffect, useState } from 'react'
-import { changePageHelper, getHeaders } from '../functions'
+import { changePageHelper, getHeaders, getSport } from '../functions'
 import { Page, StateDataAndTotals, TableContextType, TableProviderProps } from './types'
 import { useFetch } from '../hooks'
 import { initialData } from './initialData'
@@ -14,8 +14,6 @@ export const TableContext = createContext<TableContextType>({
 	isRunning: true,
 	setIsRunning: () => {}
 })
-
-const getSport = (isRunning: boolean): string => isRunning ? 'Run' : 'Ride'
 
 const TableProvider: FC<TableProviderProps> = ({ children }) => {
 	const [data, setData] = useState<StateDataAndTotals>(initialData)

@@ -7,15 +7,15 @@ import styles from './LeftMostRow.styles'
 import { LeftMostRowProps } from './LeftMostRow.types'
 
 const LeftMostRow: FC<LeftMostRowProps> = ({
-	timeframe
+	timeframe,
+	tableData
 }) => {
-	const { changePage, currentPage, data } = useTableState()
-	let currentData = data.currentData
+	const { changePage, currentPage } = useTableState()
 	const destinationPage = getNextPage(currentPage)
 	if (currentPage === Page.MONTH) {
-		currentData = currentData as MonthDataType
+		const monthData = tableData as MonthDataType
 		const index = parseFloat(timeframe)
-		return <TableCell style={styles.leftMostCell}>{formatDate(currentData[index].start_date)}</TableCell>
+		return <TableCell style={styles.leftMostCell}>{formatDate(monthData[index].start_date)}</TableCell>
 	}
 	return (
 		<TableCell style={styles.leftMostCell} onClick={() => changePage(destinationPage, timeframe)}>{timeframe}</TableCell>

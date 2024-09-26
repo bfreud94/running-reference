@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react'
 import { NavigateFunction, Params } from 'react-router-dom'
 import { numberToMonthMap } from '../components/initialData'
-import { ActivitiesApiDocument, Activity, YearActivities } from '../api/types'
-import { CurrentDataType, HomeDataType, Month, MonthDataType, Page, StateDataAndTotals, YearDataType } from '../components/types'
+import { Activity, YearActivities } from '../api/types'
+import { CurrentDataType, HomeDataType, Month, Page, StateDataAndTotals, YearDataType } from '../components/types'
 
 export const getYearlyData = (yearData: YearActivities) => 
 	Object.keys(numberToMonthMap).map((month: string) => {
@@ -76,11 +76,11 @@ export const getTimeframe = (currentPage: Page, isGoingBack: boolean, queryParam
 export const getHeaders = (page: Page): Array<string> => {
 	switch (page) {
 		case Page.HOME:
-			return ['Years', 'Total Activities', 'Average Heart Rate', 'Total Time', 'Total Distance']
+			return ['Years', 'Total Activities', 'Average Heart Rate', 'Total Time', 'Average Pace', 'Total Distance']
 		case Page.YEAR:
-			return ['Years', 'Total Activities', 'Average Heart Rate', 'Total Time', 'Total Distance']
+			return ['Years', 'Total Activities', 'Average Heart Rate', 'Total Time', 'Average Pace', 'Total Distance']
 		case Page.MONTH:
-			return ['Date', 'Activity Name', 'Average Heart Rate', 'Time', 'Miles Run']
+			return ['Date', 'Activity Name', 'Average Heart Rate', 'Time', 'Pace', 'Miles Run']
 		default:
 			return []
 	}
@@ -115,3 +115,5 @@ export const getPreviousPage = (page: Page) => {
 	}
 	return previousPage
 }
+
+export const getSport = (isRunning: boolean): string => isRunning ? 'Run' : 'Ride'
