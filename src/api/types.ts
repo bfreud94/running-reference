@@ -15,6 +15,7 @@ export type Totals = {
 }
 
 export interface ActivitiesApiDocument {
+    2009: YearActivities
     2010: YearActivities
     2011: YearActivities
     2012: YearActivities
@@ -30,6 +31,7 @@ export interface ActivitiesApiDocument {
     2022: YearActivities
     2023: YearActivities
     2024: YearActivities
+    2025: YearActivities
     totals: Totals
 }
 
