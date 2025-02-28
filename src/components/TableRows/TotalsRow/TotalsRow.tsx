@@ -18,6 +18,7 @@ import { CurrentDataType, CurrentTotalsType, HomeDataType, MonthDataType, Page, 
 import { getAllActivities } from './functions'
 import { TotalsRowProps } from './TotalsRow.types'
 import { Activity } from '../../../api/types'
+import { START_YEAR } from '../../../api/constants'
 
 const getTimeSpecificTableCells = (currentPage: Page, currentData: CurrentDataType) => {
 	let tableCells = <></>
@@ -58,7 +59,7 @@ const TotalsRow: FC<TotalsRowProps> = ({
 }) => {
 	const { currentPage, data } = useTableState()
 	let correctTotals: CurrentTotalsType = data.currentTotals
-	if (Object.keys(data.currentData).includes('2009') && currentPage === Page.MONTH && data.currentData) {
+	if (Object.keys(data.currentData).includes(START_YEAR) && currentPage === Page.MONTH && data.currentData) {
 		correctTotals = (tableData as MonthDataType).reduce((accumulator: CurrentTotalsType, currentActivity: Activity): CurrentTotalsType => {
 			return {
 				activities: accumulator.activities + 1,
@@ -68,7 +69,7 @@ const TotalsRow: FC<TotalsRowProps> = ({
 			activities: 0,
 			distance: 0
 		})
-	} else if (Object.keys(data.currentData).includes('2009') && currentPage === Page.YEAR && data.currentData) {
+	} else if (Object.keys(data.currentData).includes(START_YEAR) && currentPage === Page.YEAR && data.currentData) {
 		const [year] = window.location.pathname.split('/').filter(Boolean)
 		const yearlyData = getYearlyData(data.currentData[year as keyof CurrentDataType])
 		correctTotals = Object.keys(yearlyData).reduce((accumulator: CurrentTotalsType, currentYear: string): CurrentTotalsType => {
