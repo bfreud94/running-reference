@@ -1,7 +1,7 @@
 import { Activity } from '../api/types'
 import { HomeDataType, StateDataAndTotals } from './types'
 
-export const validYears = ['2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024']
+export const validYears = ['2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025']
 
 export const validMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
@@ -21,6 +21,13 @@ export const numberToMonthMap = {
 }
 
 const initialCurrentData: HomeDataType = {
+	2009: {
+		activities: [],
+		totals: {
+			activities: 0,
+			distance: 0
+		}
+	},
 	2010: {
 		activities: [],
 		totals: {
@@ -120,6 +127,13 @@ const initialCurrentData: HomeDataType = {
 		}
 	},
 	2024: {
+		activities: [],
+		totals: {
+			activities: 0,
+			distance: 0
+		}
+	},
+	2025: {
 		activities: [],
 		totals: {
 			activities: 0,

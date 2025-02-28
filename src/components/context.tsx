@@ -1,5 +1,5 @@
 import React, { createContext, FC, useCallback, useEffect, useState } from 'react'
-import { changePageHelper, getHeaders, getSport } from '../functions'
+import { changePageHelper, getHeaders } from '../functions'
 import { Page, StateDataAndTotals, TableContextType, TableProviderProps } from './types'
 import { useFetch } from '../hooks'
 import { initialData } from './initialData'
@@ -19,8 +19,8 @@ const TableProvider: FC<TableProviderProps> = ({ children }) => {
 	const [data, setData] = useState<StateDataAndTotals>(initialData)
 	const [isRunning, setIsRunning] = useState<boolean>(true)
 	const [currentPage, setCurrentPage] = useState<Page>(Page.HOME)
-	const sport = getSport(isRunning)
-	const { apiResponse, isLoading, status } = useFetch(`http://localhost:8000/api/yearlyActivities?sport=${sport}`)
+	// const sport = getSport(isRunning)
+	const { apiResponse, isLoading, status } = useFetch(`http://localhost:8000/api/activities`)
 	const navigate = useNavigate()
 
 	const queryParams = children ? children.props.match.params : {}
